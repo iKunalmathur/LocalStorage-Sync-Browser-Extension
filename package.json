@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "web-ext": "^10.1.0"
+  },
+  "scripts": {
+    "start:firefox": "web-ext run --source-dir ./firefox",
+    "build:firefox": "web-ext build --source-dir ./firefox --artifacts-dir ./dist"
+  }
+}

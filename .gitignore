@@ -1,3 +1,10 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+web-ext-artifacts/
+
 # macOS
 .DS_Store
 .AppleDouble
@@ -40,3 +47,8 @@ Temporary Items
 *.crx
 *.pem
 *.zip
+*.xpi
+
+# Package manager lock files (using pnpm)
+package-lock.json
+yarn.lock

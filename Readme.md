@@ -7,7 +7,9 @@ This extension copies localStorage data from a source environment and writes it 
 This extension is available for both Chrome/Edge and Firefox browsers.
 
 ## Configure
+
 Click the settings (⚙️) button in the popup:
+
 - **Source Environment URL**: The URL where you want to read localStorage from (e.g., `https://dev.example.com`)
 - **Target Environment URL**: The URL where you want to write localStorage to (e.g., `http://localhost:3000`) - optional, defaults to `http://localhost:3000`
 - **localStorage Key**: The key to sync (e.g., `access_token`)
@@ -15,6 +17,7 @@ Click the settings (⚙️) button in the popup:
 ## Installation
 
 ### Chrome/Edge
+
 1. Go to `chrome://extensions` (or `edge://extensions`)
 2. Enable "Developer mode"
 3. Click "Load unpacked" and select the `chrome/` folder
@@ -23,48 +26,74 @@ Click the settings (⚙️) button in the popup:
 ### Firefox
 
 #### Temporary Installation (for testing)
+
 1. Open Firefox and navigate to `about:debugging`
 2. Click "This Firefox" in the left sidebar
 3. Click "Load Temporary Add-on..."
 4. Navigate to the `firefox/` folder and select `manifest.json`
 5. The extension will load temporarily until you restart Firefox
 
-#### Permanent Installation (for development)
+#### Development with web-ext (Recommended)
+
+```bash
+# Install dependencies
+pnpm install
+
+# Run Firefox with extension auto-reload
+pnpm start:firefox
+
+# Build extension package
+pnpm build:firefox
+```
+
+#### Permanent Installation (for production)
+
 Package the extension as an `.xpi` file or sign it with Mozilla and submit to [Mozilla Add-ons](https://addons.mozilla.org/) for review and distribution.
 
 ## Usage
+
 1. Open your source environment and ensure the data is in localStorage
-2. Open or ensure target environment is running
-3. Click the extension icon:
+2. Click the extension icon (target tab will be created automatically if not open):
    - It reads the data from source tab
+   - Opens target URL if not already open (waits briefly for page load)
    - Writes it into target's localStorage with the same key
    - Reloads target automatically
 
-## Notes
+## Features
+
 - Works with any localStorage key-value pair
 - Supports any source and target URLs
 - All settings are saved and persist across browser sessions
+- Automatically creates target tab if not open
+- Validates URLs before saving settings
+- Visual feedback with loading states and status messages
 
 ## Browser-Specific Differences
 
 ### Chrome/Edge (`chrome/` folder)
+
 - Uses `chrome` API
 - Manifest V3 with service worker
+- Version: 1.0.0
 
 ### Firefox (`firefox/` folder)
+
 - Uses `browser` API
-- Manifest includes `browser_specific_settings` section
-- Uses background scripts instead of service worker
-- Requires Firefox 109 or later
+- Manifest includes `browser_specific_settings` section42+
+- **Extension not loading**: Check browser console (Ctrl+Shift+K) for errors
+- **Sync fails**: En42 or later
+- Version: 1.0.1 tab is open (target will be created automatically if needed)
 
 ## Troubleshooting
 
 ### General
+
 - **"No source tab open"**: Open your source environment URL in a browser tab
 - **"Data not found"**: Confirm the key exists in localStorage; verify in DevTools > Application > Local Storage
 - Update source/target URLs in settings if needed
 
 ### Firefox-Specific
-- **"about:debugging" shows error**: Ensure Firefox is version 109+
+
+- **"about:debugging" shows error**: Ensure Firefox is version 142+
 - **Extension not loading**: Check browser console (Ctrl+Shift+K) for errors
 - **Sync fails**: Ensure both source and target tabs are open and URLs are correct
